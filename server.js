@@ -29,9 +29,32 @@ function loadDb() {
   try {
     if (fs.existsSync(DB_FILE)) {
       const parsed = JSON.parse(fs.readFileSync(DB_FILE, "utf8"));
+
+      const toArray = (value) => {
+        if (Array.isArray(value)) return value;
+        if (value && typeof value === "object") return Object.values(value);
+        return [];
+      };
+
       return {
         ...DEFAULT_DB,
         ...parsed,
+
+        users:
+          parsed.users && typeof parsed.users === "object"
+            ? parsed.users
+            : {},
+
+        listings: toArray(parsed.listings),
+
+        buyRequests: toArray(parsed.buyRequests),
+
+        negotiations: toArray(parsed.negotiations),
+
+        deals: toArray(parsed.deals),
+
+        activities: toArray(parsed.activities),
+
         counters: {
           ...DEFAULT_DB.counters,
           ...(parsed.counters || {})
@@ -41,6 +64,7 @@ function loadDb() {
   } catch (error) {
     console.error("Database load error:", error);
   }
+
   return structuredClone(DEFAULT_DB);
 }
 
