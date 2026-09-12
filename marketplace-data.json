@@ -1,0 +1,9 @@
+{
+  "users": {},
+  "listings": {},
+  "buyRequests": {},
+  "negotiations": {},
+  "deals": {},
+  "activities": [],
+  "counters": {"listing": 1, "request": 1, "negotiation": 1, "deal": 1, "member": 1}
+}
